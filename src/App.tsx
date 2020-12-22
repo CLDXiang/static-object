@@ -91,6 +91,26 @@ function App() {
     head.position.y = headPositionY;
     head.material = creeperMaterial;
 
+    /** 脑壳动画 */
+    const headAnimation = new BABYLON.Animation(
+      'headAnimation',
+      'rotation.y',
+      30,
+      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+      BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
+    );
+    headAnimation.setKeys([
+      { frame: 0, value: 0 },
+      { frame: 15, value: 0 },
+      { frame: 30, value: Math.PI / 6 },
+      { frame: 45, value: Math.PI / 6 },
+      { frame: 75, value: -Math.PI / 6 },
+      { frame: 90, value: -Math.PI / 6 },
+      { frame: 105, value: 0 },
+    ]);
+    head.animations = [headAnimation];
+    scene.beginAnimation(head, 0, 105, true);
+
     /** 身体 */
     const body = BABYLON.MeshBuilder.CreateBox('body', {
       width: BODY_SIZE[0],
@@ -153,6 +173,32 @@ function App() {
     const rightBackFoot = leftFrontFoot.createInstance('rightBackFoot');
     rightBackFoot.position.x = -leftFrontFoot.position.x;
     rightBackFoot.position.z = -leftFrontFoot.position.z;
+
+    /** jio 动画 */
+    const footAnimation = new BABYLON.Animation(
+      'headAnimation',
+      'rotation.x',
+      30,
+      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+      BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE
+    );
+    footAnimation.setKeys([
+      { frame: 0, value: 0 },
+      { frame: 5, value: Math.PI / 6 },
+      { frame: 20, value: -Math.PI / 6 },
+      { frame: 25, value: 0 },
+      { frame: 30, value: Math.PI / 6 },
+      { frame: 45, value: -Math.PI / 6 },
+      { frame: 50, value: 0 },
+    ]);
+    leftFrontFoot.animations = [footAnimation];
+    rightFrontFoot.animations = [footAnimation];
+    leftBackFoot.animations = [footAnimation];
+    rightBackFoot.animations = [footAnimation];
+    scene.beginAnimation(leftFrontFoot, 0, 25, true);
+    scene.beginAnimation(rightFrontFoot, 10, 35, true);
+    scene.beginAnimation(leftBackFoot, 10, 35, true);
+    scene.beginAnimation(rightBackFoot, 0, 25, true);
 
     /** 地板 */
     const ground = BABYLON.MeshBuilder.CreateGround('ground', { width: 20, height: 20 });
