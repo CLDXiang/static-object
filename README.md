@@ -1,3 +1,3 @@
-# Music Visualization
+# Static Object
 
-Music Visualization
+Static Object
